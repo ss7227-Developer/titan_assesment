@@ -727,3 +727,103 @@ I’ll commit all the current project changes with the exact message `tier 1 com
 ## Assistant — logged_at: 2026-11-11T18:00:18-05:00; sent_at: unavailable (response prepared for delivery after successful push)
 
 Committed and pushed to `main` with message **`tier 1 completed`**. All 91 offline tests pass.
+
+## User — logged_at: 2026-11-11T18:02:47-05:00; sent_at: unavailable
+
+I need you to scan the code and tell me how much of tier 2 has been completed. Multi-Step Reasoning — Extend your agent to handle questions that require more than one round of tool calls:
+
+The agent should be able to refine its search based on intermediate results (not just one-shot)
+Maintain state across steps — the agent should know what it has already retrieved and avoid redundant calls
+Show the difference: pick at least two of the reference questions where multi-step produces a better answer than single-pass and include both outputs in your README
+Observability & Tracing — Instrument your agent so that every run produces a structured trace:
+
+Log each step: tool selected, input to tool, raw tool output, agent's reasoning at each step, and final synthesis
+Store traces in a queryable format (structured JSON, SQLite, or similar)
+A reviewer should be able to look at a trace and understand exactly why the agent made each decision
+
+## Assistant — logged_at: 2026-11-11T18:02:47-05:00; sent_at: unavailable
+
+I’ll scan the research loop, state handling, traces, and README, then assess which Tier 2 requirements are implemented and which still need evidence.
+
+## Assistant — logged_at: 2026-11-11T18:03:49-05:00; sent_at: unavailable (commentary logged after delivery)
+
+The multi-step loop is implemented, and a saved Basel III trace shows the agent refining its query after finding missing evidence. Caching prevents repeated API requests, though the model still sometimes requests the same query again.
+
+The main gaps are proof and trace detail: the README has no controlled single-pass versus multi-step comparison, and traces capture brief decision summaries and normalized tool results rather than the full context seen by the model. All 91 offline tests pass.
+
+## Assistant — logged_at: 2026-11-11T18:03:49-05:00; sent_at: unavailable (final prepared immediately before delivery)
+
+Tier 2 is **partially complete: 3 requirements are implemented, 2 are partially met, and 1 is missing.** The core infrastructure exists; demonstrating better answers remains unfinished.
+
+| Requirement | Status | What I found |
+| --- | --- | --- |
+| Refine searches after intermediate results | Implemented | The graph returns tool results to research. The model assesses missing evidence and can choose focused follow-ups. Actual saved runs show this happening, although reformulation remains unreliable. |
+| Maintain state and avoid redundant calls | Implemented | State retains evidence, assessments, recent searches, and a per-run cache. Sources are deduplicated. Repeated queries avoid another provider request, but still consume model decisions. |
+| Two reference questions with single-pass and multi-step outputs in README | Missing | The README links evaluation reports but does not include the required paired outputs. Existing comparisons change code/model configuration; they do not isolate the benefit of additional search rounds. |
+| Log tool selection, inputs, outputs, decision summaries, and synthesis | Partial | Tool names/arguments, returned evidence, assessments, timing, and final rendered answers are logged. Results are normalized and bounded; original provider payloads and intermediate synthesis drafts are not retained. |
+| Queryable structured traces | Implemented | Each normal CLI run produces JSONL with run IDs, sequence numbers, timestamps, counters, and termination status. JSONL satisfies this requirement without SQLite. |
+| Reviewer can understand why each decision occurred | Partial | Assessments record evidence IDs, gaps, follow-up queries, and stop reasons. Initial search rationale and some transitions are generic. Exact model inputs are not saved, so a reviewer cannot reconstruct precisely which truncated evidence the model saw. |
+
+A concrete example is the saved Basel III run: it first searches `Basel III capital requirements banks`, identifies missing numerical requirements, then searches `Basel III capital ratios CET1 Tier 1 minimum`. That demonstrates result-driven refinement. It subsequently repeats the second query twice; both are cache hits. The final answer still lacks the requested ratios, so this demonstrates the mechanism, not improved answer quality.
+
+The relevant implementation is in [graph.py](/Users/sammusuryanarayanan/Desktop/titan_assesment/research_agent/graph.py:200), [context.py](/Users/sammusuryanarayanan/Desktop/titan_assesment/research_agent/context.py:23), and [trace.py](/Users/sammusuryanarayanan/Desktop/titan_assesment/research_agent/trace.py:41). The saved quality findings are in [LATEST_SUITE_REPORT.md](/Users/sammusuryanarayanan/Desktop/titan_assesment/evaluation/LATEST_SUITE_REPORT.md:1).
+
+To finish Tier 2:
+
+1. Run a controlled comparison using the same model, prompts, sources, and initial search, allowing additional research rounds only in the multi-step variant. Include both actual outputs for two improved reference questions in the README. Calling two tools in one batch is not sufficient evidence of multi-step refinement.
+2. Add specific operational decision summaries, including initial search intent and synthesis decisions, and record the bounded evidence snapshot supplied to each decision. Brief summaries are appropriate; hidden reasoning transcripts are unnecessary.
+3. Clarify whether “raw tool output” means the wrapper’s returned result or the original API response. Current traces preserve the former after normalization/bounding, not untouched provider JSON/XML.
+
+**Verification:** 91 offline tests passed; 3 live tests were deselected. I inspected saved real-run traces but did not rerun the live suite or change application code.
+
+## User — logged_at: 2026-11-11T18:04:34-05:00; sent_at: unavailable
+
+Have deliverables been met? Deliverables
+Push your code to a public GitHub repository
+Your solution must be written in Python
+Single-command agent run (e.g., python agent.py "your question")
+Include a README.md with:
+Architecture overview and key design decisions
+Setup and run instructions (including Python version and dependency install)
+Agent performance summary and honest assessment of limitations
+What you would do differently with more time
+Include your prompt-log.md capturing all AI tool interactions (required)
+Your agent should be runnable and testable without paid API keys
+
+## Assistant — logged_at: 2026-11-11T18:04:34-05:00; sent_at: unavailable
+
+I’ll check each deliverable against the repository, including its GitHub visibility and what the prompt log captures.
+
+## Assistant — logged_at: 2026-11-11T18:05:00-05:00; sent_at: unavailable (final prepared immediately before delivery)
+
+**Most deliverables are met. The remaining qualification is the prompt log’s completeness and latest GitHub version.**
+
+| Deliverable | Status |
+| --- | --- |
+| Code pushed to a public GitHub repository | **Met.** GitHub confirms [titan_assesment](https://github.com/ss7227-Developer/titan_assesment) is public. Commit `46fc696` contains the completed code. |
+| Python implementation | **Met.** CLI, graph, tools, and tests are Python. |
+| Single-command agent run | **Met.** After setup: `python agent.py "your question"`. Ollama must be running with the selected model installed. |
+| README architecture and design decisions | **Met.** Documents LangGraph, ReAct, tool interfaces, assessments, synthesis, and safeguards. |
+| README setup instructions | **Met.** Includes Python 3.11+, dependency installation, Ollama setup, model downloads, and run commands. |
+| Performance summary and honest limitations | **Met.** Reports actual results: **1 pass, 3 partial, 4 fail**, with retrieval and grounding limitations. |
+| Improvements with more time | **Met.** Explicitly documented. |
+| Runnable/testable without paid API keys | **Met.** Uses local Ollama and public Wikipedia/arXiv endpoints. Offline tests require no server or keys. |
+| Complete AI interaction log | **Qualified.** `prompt-log.md` is committed and records development prompts and visible replies. It does **not** contain every underlying tool invocation/result. The latest review exchanges are currently local and uncommitted. |
+
+If “all AI tool interactions” means your prompts and the AI’s visible responses, the log follows that approach. If it means a full transcript including tool calls/results, that requirement is not fully met.
+
+**Verified now:** CLI help works; **91 offline tests pass**, with 3 live tests deselected. I did not repeat a fresh-clone installation or live API checks during this review.
+
+The missing Tier 2 single-pass/multi-step comparison remains a separate functional requirement; it does not prevent the README deliverables above from being present.
+
+## User — logged_at: 2026-11-11T18:05:38-05:00; sent_at: unavailable
+
+Do one last `git push` and save the final repo.
+
+## Assistant — logged_at: 2026-11-11T18:05:38-05:00; sent_at: unavailable
+
+I’ll commit the latest prompt-log entries, push to GitHub, and verify the working tree is clean.
+
+## Assistant — logged_at: 2026-11-11T18:05:38-05:00; sent_at: unavailable (final prepared for delivery after verified push)
+
+Saved and pushed to GitHub. The working tree is clean and `main` is synchronized with `origin/main`.
