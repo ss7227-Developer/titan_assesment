@@ -7,6 +7,7 @@ import httpx
 from ollama import AsyncClient, ResponseError
 
 from .runtime import BudgetExceeded, Runtime
+from .context import MAX_MODEL_INPUT_CHARS, encode
 from .trace import Trace
 
 
@@ -50,17 +51,14 @@ class OllamaModel:
 
     async def chat(self, messages: list[dict], *, node: str,
                    schema: dict | None = None, tools: list[dict] | None = None,
-                   research: bool = False) -> dict:
+                   research: bool = False, max_tokens: int | None = None) -> dict:
         rt = self.runtime
         if rt.model_calls >= rt.max_models:
             raise BudgetExceeded("Model call budget reached")
         timeout = min(18, rt.remaining("research" if research else "model"))
         if timeout <= 0.05:
             raise BudgetExceeded("Model time budget reached")
-        rt.model_calls += 1
-        started = rt.elapsed
-        self.trace.event("model_start", node, model=self.name, timeout_seconds=timeout)
-        options = {"temperature": 0, "num_predict": 700 if schema else 180, "num_ctx": 8192}
+        options = {"temperature": 0, "num_predict": max_tokens or (700 if schema else 180), "num_ctx": 8192}
         kwargs = {"model": self.name, "messages": messages, "stream": False,
                   "options": options, "keep_alive": "5m"}
         if schema is not None:
@@ -69,6 +67,13 @@ class OllamaModel:
             kwargs["tools"] = tools
         if self.supports_thinking:
             kwargs["think"] = False
+        input_chars = len(encode({"messages": messages, "tools": tools, "format": schema}))
+        if input_chars > MAX_MODEL_INPUT_CHARS:
+            raise ModelError("Model input exceeded the configured context budget")
+        rt.model_calls += 1
+        started = rt.elapsed
+        self.trace.event("model_start", node, model=self.name, timeout_seconds=timeout)
+        self.trace.event("model_context", node, input_chars=input_chars)
         try:
             response = await rt.bounded(self.client.chat(**kwargs), timeout)
             message = response.message.model_dump(exclude_none=True)

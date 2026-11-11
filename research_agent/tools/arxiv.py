@@ -34,6 +34,12 @@ class ArxivTool:
             raise ValueError("arXiv query must contain searchable words")
         return " AND ".join(f'all:"{word}"' for word in words)
 
+    @classmethod
+    def cache_key(cls, query: str, max_results: int = 3) -> str:
+        # The adapter ANDs all terms, so order/repeated terms do not change retrieval.
+        terms = cls.search_expression(query.casefold()).split(" AND ")
+        return f"{max_results}:" + " AND ".join(sorted(set(terms)))
+
     async def search(self, query: str, max_results: int = 3,
                      remaining_timeout: float = 8) -> ToolResult:
         validate_query(query, max_results)

@@ -1,6 +1,6 @@
 # Academic research agent — architecture draft
 
-Status: architecture agreed in principle; planning only, with no application implementation authorized yet. Confirmed choices and implementation defaults are recorded below; remaining verification items are listed at the end.
+Status: v1 implemented. The architecture remains one LangGraph research agent with separate synthesis, Wikipedia/arXiv tools, and local Ollama. Improvements include a per-invocation cache, a stop after two consecutive attempts add no sources, bounded model snapshots, targeted citation repair, and question/answer traces. Successful search count does not impose a hard stop. No additional source providers were added.
 
 ## Goal and v1 scope
 
@@ -8,7 +8,7 @@ Build a Python CLI that accepts one academic research question, uses one researc
 
 Scope means factual research and educational explanation, including banking, economics, history, regulatory history, baking science, and academic papers. It is not restricted to paper discovery. Classify by the intent of the question, not a subject blacklist: factual historical/economic research is supported even when people or institutions are involved. Subjective recommendations, personal advice, social chat, and unrelated creative tasks are out of scope. “What is the best restaurant in New York City?” is refused. Distinguish scope refusal from insufficient retrieved evidence.
 
-For ambiguity, state a reasonable interpretation and proceed when alternatives do not materially change the answer. Ask a focused clarification and end the invocation when an unknown detail would materially change the result (for example, which country's banking regulation is meant). For mixed requests, research and answer the supported part, then explicitly explain the limitation on the unsupported part; refuse the entire request only when no supported research part remains. Clarification can apply to the supported part when essential context is missing.
+For harmless ambiguity, use a reasonable interpretation internally and proceed; do not append raw scope-stage prose to the researched answer. Ask a focused clarification when an unknown detail materially changes the result. For mixed requests, answer the supported part and add a code-generated scope limitation; refuse the entire request only when no supported research part remains. Any factual answer claims must pass through synthesis and citation validation.
 
 Confirmed evidence depth for v1: Wikipedia extracts and arXiv metadata/abstracts; no paper PDF parsing. Answers must not imply that full articles or papers were read. Proposed remaining boundaries: English, one question per invocation, no conversation memory, no web UI, no database/vector store, and no general web search. Only model inference is local; searches require external network requests.
 
@@ -36,23 +36,23 @@ Use a typed state schema with these groups:
 | State | Contents |
 | --- | --- |
 | Input/config | Question, model name, immutable configured limits. |
-| Conversation | Model messages, pending tool calls, matching tool responses; use the LangGraph message reducer and preserve tool-call associations. |
+| Research context | Pending tool calls, a per-invocation query/result cache, and the last four compact search observations. Rebuild a fresh bounded model snapshot from the question, unique evidence registry, recent observations, and remaining budget; do not replay full tool responses. |
 | Scope | Decision (`in_scope`, `out_of_scope`, `needs_clarification`), supported research question, unsupported portions, stated interpretation, and brief user-facing explanation. Mixed requests with a supported part route as in_scope. |
 | Evidence | Registry keyed by source identity, run-local citation IDs, normalized excerpts/abstracts and metadata, deduplicated query history. |
 | Execution | Monotonic start/deadline, tool/HTTP/model counts, remaining research allowance, repair count. Counters and deadlines are written only by application nodes. |
 | Output | Structured answer items, citation validation errors, final rendered response, status and stop reason. |
 
-State updates are returned by nodes. In v1 execution is sequential: append/merge messages and evidence, replace scalar decisions/status, and increment counters in code. No checkpoint database or external tracing service is required. Local JSON traces record node/state transitions and execution events as specified below; optional `--debug` also prints brief progress to stderr. Trace records are for inspection, not resumable graph checkpoints.
+State updates are returned by nodes. Execution is sequential: merge evidence/cache, replace the bounded search observations and scalar decisions/status, and increment counters in code. No checkpoint database or external tracing service is required. Local JSON traces record node/state transitions and execution events; optional `--debug` also prints brief progress to stderr. Trace records are for inspection, not resumable graph checkpoints.
 
 ### Node responsibilities and transitions
 
 1. **Preflight (CLI):** start timing before setup, validate input/config, open the local trace, and check Ollama availability, model presence and tool support within the deadline. Do not silently download models.
 2. **`scope`:** model classifies the question, records any stated interpretation, and separates supported/unsupported parts. Proceed with the supported part of mixed requests. Refusal/material clarification goes directly to rendering with no external searches. Malformed decisions get at most one repair within budgets, then fail clearly.
-3. **`research`:** model sees the question, tool schemas, evidence, and remaining allowance. It requests searches or declares readiness. Route to `tools` only while research budget remains; readiness or exhausted research allowance routes to `synthesize`. If no usable evidence exists, render insufficient evidence instead.
-4. **`tools`:** validate tool names/arguments, reject duplicate queries, and execute requested calls sequentially within limits. Add normalized evidence and structured errors to state, then return to `research` if allowed; otherwise route to synthesis/insufficient evidence. Preserve a response for every requested call, including calls skipped for limits, so message history remains valid.
-5. **`synthesize`:** same agent/model, with tools disabled, produces structured answer items from registered evidence. Reserve a model call and time for this phase. On repair, pass validation errors and the existing evidence back to this node; no new searches.
-6. **`validate`:** code checks output structure, evidence/inference labels, citation IDs, and required references. One repair is allowed only with remaining time/model budget. Otherwise render a limitation response rather than an invalid answer.
-7. **`render`:** format the answer/refusal/limitation on stdout, including interpretation and unsupported-part limitations when applicable; references are built from registry metadata, never model-invented URLs. Record termination and route to `END`.
+3. **`research`:** model sees the question, tool schemas, evidence, as-of date, and remaining allowance. An initial native tool call starts retrieval. Before completion, a structured assessment maps question parts to supporting IDs and gaps, choosing a focused follow-up, complete finish, or explicitly limited finish. Plain text without tool calls is never treated as readiness. General paper/provider, comparison coverage, observation-period, and paper-recency metadata checks apply. One assessment repair per run is allowed; an inconsistent result falls back to mechanically valid partial mappings with an explicit limitation. All attempts consume existing budgets. No new graph node or agent is introduced.
+4. **`tools`:** validate arguments, reuse cached successful/empty results, and execute uncached calls sequentially within limits. Do not cache transient errors. Record every call, including cache hits/skips, and merge unique evidence. Stop after two consecutive attempts add no sources, resetting this counter whenever a new source is found. Successful searches can continue within existing budgets until the model decides evidence is sufficient. Route to separate synthesis/insufficient evidence when stopping.
+5. **`synthesize`:** same model, tools disabled, sees the completion assessment and only sources mapped as supported. Each item identifies its assessed part and may cite only that part's support IDs. Missing parts must not be filled from memory; the renderer adds gaps and limitations. Keep a model-call/time reserve for this phase. Citation repair includes the rejected draft and specific errors; no new searches during synthesis.
+6. **`validate`:** code checks structure, nonblank text, provenance labels, citation IDs, and required references. One repair receives the rejected answer plus specific item paths, unknown IDs, and allowed IDs within the context/time budgets. Oversized rejected drafts have an explicitly truncated representation. Otherwise render a limitation response.
+7. **`render`:** print the validated synthesis, references built from registry metadata, and any code-generated limitation. Never append the scope model's interpretation or unsupported-task prose as answer content. Refusals use fixed code text; clarification requests remain explicitly labeled questions. Record termination and route to `END`.
 
 ### Stopping conditions
 
@@ -69,7 +69,7 @@ Use a small Python package with a CLI entry point, LangGraph graph/state definit
 
 | Component | Responsibility / minimum contract |
 | --- | --- |
-| CLI | Single command: `research-agent "question"`, defaulting to `qwen3:1.7b`; optional `--model MODEL`, `--trace-dir PATH`, and `--debug`. Final result on stdout; diagnostics and trace location on stderr. |
+| CLI | Single command: `python agent.py "question"`, defaulting to `qwen3:1.7b`; optional `--model MODEL`, `--trace-dir PATH`, and `--debug`. Final result on stdout; diagnostics and trace location on stderr. |
 | LangGraph graph | Own shared state and explicit/conditional edges; nodes enforce deadlines, counters, dispatch, validation, and termination. The model cannot alter limits. |
 | Ollama adapter | Translate message history, tool definitions, tool calls, and tool responses to/from the local chat API. |
 | Tool module | Expose name, description, argument schema, and `search(query, max_results, remaining_timeout) → ToolResult`. |
@@ -95,14 +95,14 @@ Wikipedia-only evidence is inadequate for requests for recent papers, state-of-t
 
 ## Initial local model
 
-Confirmed starting model: `qwen3:1.7b`, with thinking disabled where supported, configurable through `--model`. Prioritize quick testing; move to a larger model only after measuring tool-calling/provenance failures or unacceptable answer quality. Ollama lists this tag with tool support, but suitability must be tested locally rather than assumed. The Ollama executable is present; the service/model inventory was not verified because the local endpoint was unreachable during inspection. Do not start the service, pull models, or benchmark as part of this planning change.
+Confirmed model: `qwen3:1.7b`, with thinking disabled where supported, configurable through `--model`. The model was downloaded with approval and real tool, scope, and CLI checks have been run. Broader grounding quality still requires evaluation; do not infer quality from API connectivity alone.
 
 ## Local JSON traces
 
 Write one local append-only JSON Lines (`.jsonl`) file per invocation under `.research-agent/traces/`, with a unique run ID; each line is an independently parseable JSON event. Allow `--trace-dir` to override the location. Exclude generated traces from Git. This is separate from the development conversation in `prompt-log.md`.
 
 - Common event fields: schema version, run ID, increasing sequence number, UTC timestamp, monotonic elapsed milliseconds, event type, node name, and current status/counters.
-- Events: run start, node start/end, transition (from/to plus brief reason), model-call timing/status, tool start/end, validation result, and run end.
+- Events: run start with the original question, node start/end, transitions, model input size/timing/status, tool start/end (including cache hits and new source IDs), validation result, research stopping reason, and run end with the final stdout answer. Redact recognized secrets in question/answer as in all trace fields.
 - Tool events include tool name, validated arguments, call ID, normalized returned results exactly as supplied to the model, elapsed duration, success/empty/error/skipped status, and sanitized error details. Mark any source truncation. Do not log raw HTTP bodies in addition to the normalized result.
 - Decision events contain a short operational summary such as “search arXiv for paper evidence” or “enough evidence to answer,” plus the selected action. Never store hidden reasoning, thinking tokens, or chain-of-thought. Full model conversation dumps are unnecessary.
 - Final event includes termination reason (`answered`, `partial_answer`, `out_of_scope`, `clarification_needed`, `insufficient_evidence`, `deadline_exceeded`, `model_error`, `invalid_output`, `recursion_limit`, `cancelled`, or `runtime_error`), total timing, counters, and exit status. Emit a terminal event on handled failure/cancellation; abrupt process termination may leave an incomplete trace.
@@ -110,18 +110,18 @@ Write one local append-only JSON Lines (`.jsonl`) file per invocation under `.re
 
 ## Reliability defaults to review
 
-- Start with at most 6 tool calls, 10 external HTTP attempts including retries, and 10 total model calls including scope/finalization/repair; 3 results per search.
+- Stop after 2 consecutive attempts with no new sources; reset the counter when a source is added. There is no fixed successful-search cap: the model decides when evidence is sufficient within backstops of 6 actual tool executions, 10 external HTTP attempts including retries, and 10 total model calls; 3 results/search. Cache keys include provider, normalized query, and result limit; arXiv AND-term ordering is normalized. Cache lifetime is one invocation, with no cross-run persistence.
 - Hard user-visible deadline: **60 seconds from CLI entry**, including preflight, cold model loading, scope, searches, rate-limit waits, synthesis, validation, trace writes, and output. Stop research by elapsed 40 seconds; reserve up to 18 seconds for synthesis/optional repair, and the final 2 seconds for deterministic validation/rendering/cleanup. All model work stops by elapsed 58 seconds. Limit each tool execution to 8 seconds and each model request to 18 seconds, further reduced by the remaining phase and overall deadline. Never start a retry or repair without time remaining.
 - Use cancellable calls and an outer invocation deadline, not just socket inactivity timeouts or a LangGraph recursion limit. If a complete validated answer cannot be produced in time, emit a bounded limitation/timeout outcome rather than an unvalidated or fabricated answer. A researched answer on every question cannot be guaranteed within one minute; termination and a user-visible outcome are required within that budget under normal local scheduling. Ctrl-C exits cleanly. Report cold and warm timings separately in live verification.
 - Permit one transient HTTP retry within existing budgets; respect provider rate limits and Retry-After. arXiv requests are serialized with at least 3 seconds between requests, per its API terms. Wikipedia uses an identifying User-Agent.
-- Reject unknown tools, malformed arguments, and repeated identical calls without executing them. Report the error to the model within the existing model-call budget.
-- Cap source text and total context size. Proposed starting limits: 3,000 characters per source and 18,000 characters of retrieved evidence overall, explicitly marked when truncated. Deduplicate before adding evidence; stop adding evidence at the cap.
+- Reject unknown tools/malformed arguments without executing them. Equivalent cached searches return cached results without provider requests. Feed compact status/citation-ID observations to the next bounded model snapshot.
+- Cap source text at 3,000 characters and stored unique evidence at 18,000 characters. Bound serialized research/synthesis context to 16,000 characters by trimming excerpts and metadata, with truncation flags; guard the complete model input (messages/tools/schema) at 24,000 characters. These are character budgets, not exact tokenizer counts. Evidence appears once per snapshot; recent search observations contain IDs/status rather than repeated full text.
 - On a single-provider failure, allow the model to use the other source. Empty results are not an infrastructure failure. If all useful evidence is missing, print an explicit insufficient-evidence response. If Ollama cannot produce a final response, print an actionable error to stderr and exit nonzero.
 - Exit codes: 0 for a completed/partial answer, scope refusal, clarification request, or insufficient-evidence result; 1 for runtime failures including hard deadline exhaustion; 2 for invalid invocation/configuration. On hard timeout, print a short limitation to stdout, diagnostic to stderr, and a terminal trace event without another model call. Local JSON traces are the only persistent application run logs in v1.
 
 ## Setup and verification
 
-Keep setup simple: Python 3.11+ in a local virtual environment; a package exposing the `research-agent` entry point; LangGraph, the Ollama Python SDK, a small async HTTP client/feed parser, and pytest. No paid API keys, LangSmith dependency, or hosted model fallback. Document virtual-environment/install commands, Ollama/model setup, the single CLI command, trace location, and offline versus live verification commands. Pin and document exact tested dependency versions when implementing, including Ollama server version and model tag/digest; do not invent unverified version pins in this architecture draft.
+Setup: Python 3.11+ (tested with 3.12.14) in a virtual environment, `python agent.py "question"`, LangGraph, Ollama SDK, HTTPX, defusedxml, and pytest. `requirements.txt` pins dependencies. No paid keys or hosted fallback. LangSmith is a transitive dependency of LangGraph; runtime remote tracing is explicitly disabled. See README.md for setup, running, traces, and separate offline/live checks.
 
 Use **pytest for offline tests** with fake model responses, fake clocks, and mocked HTTP fixtures. Default tests must not contact Ollama or external providers. Live verification is a separate explicit command/suite, excluded from the default test run: check real local Ollama tool calls/structured responses and each real provider API, then run end-to-end questions and record latency and trace artifacts. Do not claim live integrations were verified from offline tests.
 

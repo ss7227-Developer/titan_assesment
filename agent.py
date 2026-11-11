@@ -26,9 +26,10 @@ async def run(args, started):
     trace = None
     model = None
     reason, code = "runtime_error", 1
+    final_answer = ""
     try:
         trace = Trace(args.trace_dir, runtime)
-        trace.event("run_start", model=args.model)
+        trace.event("run_start", model=args.model, original_question=args.question)
         print(f"Trace: {trace.path}", file=sys.stderr)
         async with asyncio.timeout(runtime.remaining()):
             model = OllamaModel(args.model, args.ollama_url, runtime, trace)
@@ -40,10 +41,12 @@ async def run(args, started):
                 state = await agent.run(args.question)
             reason = state["stop_reason"]
             code = 1 if reason == "invalid_output" else 0
-            print(state["result"], flush=True)
+            final_answer = state["result"]
+            print(final_answer, flush=True)
     except (TimeoutError, BudgetExceeded):
         reason = "deadline_exceeded"
-        print("I could not complete a validated research answer within the time/call budget.", flush=True)
+        final_answer = "I could not complete a validated research answer within the time/call budget."
+        print(final_answer, flush=True)
         print("Research stopped at its deadline or call limit.", file=sys.stderr)
     except ModelError as exc:
         reason = "model_error"
@@ -63,7 +66,7 @@ async def run(args, started):
     finally:
         try:
             if trace:
-                trace.finish(reason, code)
+                trace.finish(reason, code, final_answer)
         finally:
             if trace:
                 trace.close()

@@ -6,7 +6,7 @@ from urllib.parse import quote
 from ..contracts import Source, ToolResult
 from ..runtime import BudgetExceeded
 from ..trace import redact
-from .base import ProviderError, ProviderHTTP, clean_text, tool_schema, utc_now, validate_query
+from .base import ProviderError, ProviderHTTP, clean_text, query_cache_key, tool_schema, utc_now, validate_query
 
 
 class WikipediaTool:
@@ -16,6 +16,7 @@ class WikipediaTool:
                          "history and background. Returns evidence and canonical article URLs, "
                          "not full articles or current legal verification. Use short topic keywords.")
     endpoint = "https://en.wikipedia.org/w/api.php"
+    cache_key = staticmethod(query_cache_key)
 
     def __init__(self, http: ProviderHTTP):
         self.http = http

@@ -3,6 +3,7 @@
 import asyncio
 import re
 import time
+import unicodedata
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from typing import Protocol
@@ -21,6 +22,15 @@ def utc_now() -> str:
 
 def clean_text(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip()
+
+
+def query_cache_key(query: str, max_results: int = 3) -> str:
+    """Preserve Wikipedia query semantics; only normalize case/space/Unicode."""
+    normalized = " ".join(unicodedata.normalize("NFC", query).split())
+    # Boolean syntax and quoted expressions may be case-sensitive in provider queries.
+    if not re.search(r'\b(?:AND|OR|NOT)\b|["():*~\[\]]', normalized):
+        normalized = normalized.casefold()
+    return f"{max_results}:" + normalized
 
 
 def validate_query(query, max_results):
@@ -44,6 +54,8 @@ def tool_schema(name: str, description: str) -> dict:
 class SearchTool(Protocol):
     name: str
     schema: dict
+
+    def cache_key(self, query: str, max_results: int = 3) -> str: ...
 
     async def search(self, query: str, max_results: int = 3,
                      remaining_timeout: float = 8) -> ToolResult: ...

@@ -49,9 +49,10 @@ class Trace:
         self.file.write(json.dumps(redact(record), ensure_ascii=False) + "\n")
         self.file.flush()
 
-    def finish(self, reason: str, exit_status: int):
+    def finish(self, reason: str, exit_status: int, final_answer: str = ""):
         if not self.finished:
-            self.event("run_end", termination_reason=reason, exit_status=exit_status)
+            self.event("run_end", termination_reason=reason, exit_status=exit_status,
+                       final_answer=final_answer)
             self.finished = True
 
     def close(self):

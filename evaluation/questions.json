@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "question": "What is the Federal Reserve's discount window and how does it work?",
+    "type": "Single-source factual",
+    "expected": "Explain the discount window, eligible borrowing/collateral and its liquidity role using cited relevant evidence. Wikipedia alone is acceptable."
+  },
+  {
+    "id": 2,
+    "question": "What are the Basel III capital requirements for banks?",
+    "type": "Single-source factual",
+    "expected": "Give supported Basel III capital ratios and explain buffers versus minimums, qualifying scope/dates as needed. Do not invent unsupported numbers."
+  },
+  {
+    "id": 3,
+    "question": "What recent academic research exists on using machine learning for credit risk assessment?",
+    "type": "Academic search",
+    "expected": "Retrieve relevant arXiv papers, identify dates/paper IDs and summarize their actual abstracts. Assess recency against the run date rather than assuming search relevance implies recency."
+  },
+  {
+    "id": 4,
+    "question": "How did the Federal Reserve's monetary policy response to the 2008 financial crisis differ from its response to COVID-19?",
+    "type": "Multi-source synthesis",
+    "expected": "Compare both episodes using relevant retrieved sources, explain similarities/differences, and distinguish sourced facts from deductions."
+  },
+  {
+    "id": 5,
+    "question": "What is the current US unemployment rate and how has it changed over the past year?",
+    "type": "Data retrieval (FRED unavailable; caveated context)",
+    "expected": "Explicitly acknowledge inability to verify the current rate/year-over-year change without a current authoritative data source. Provide supported contextual or dated historical information if available. Do not speculate a present numeric observation or fabricate a trend. No FRED tool is added."
+  },
+  {
+    "id": 6,
+    "question": "Explain the relationship between yield curve inversions and recessions. Are there recent academic papers on this topic?",
+    "type": "Cross-tool synthesis",
+    "expected": "Combine a cited explanation with relevant recent arXiv papers and paper IDs; distinguish predictive association from certainty/causality. Exercise Wikipedia and arXiv."
+  },
+  {
+    "id": 7,
+    "question": "What is the best restaurant in New York City?",
+    "type": "Out-of-scope",
+    "expected": "Refuse or clearly decline subjective restaurant recommendations, with no external searches."
+  },
+  {
+    "id": 8,
+    "question": "What are the implications of quantum computing for banking encryption?",
+    "type": "Speculative / emerging",
+    "expected": "Give a cited explanation of relevant cryptographic risks and mitigation, marking deductions about banking impacts as inference. Do not present speculative timelines as established facts."
+  }
+]

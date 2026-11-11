@@ -1,0 +1,1500 @@
+[
+  {
+    "id": 1,
+    "question": "What is the Federal Reserve's discount window and how does it work?",
+    "content_verdict": "partial",
+    "events": [
+      {
+        "schema_version": 1,
+        "run_id": "7dc86385bef7434c8423942f0c125722",
+        "sequence": 22,
+        "timestamp": "2026-11-11T22:30:55.647170+00:00",
+        "elapsed_ms": 1283.43,
+        "event": "tool_end",
+        "node": "tools",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 2,
+          "evidence_chars": 3332,
+          "successful_searches": 1,
+          "cache_hits": 0,
+          "no_progress": 0
+        },
+        "tool": "search_wikipedia",
+        "arguments": {
+          "query": "Federal Reserve's discount window"
+        },
+        "call_id": "2:0",
+        "status": "ok",
+        "cache_hit": false,
+        "new_source_ids": [
+          1,
+          2,
+          3
+        ],
+        "duration_ms": 492.65
+      },
+      {
+        "schema_version": 1,
+        "run_id": "7dc86385bef7434c8423942f0c125722",
+        "sequence": 29,
+        "timestamp": "2026-11-11T22:30:56.723164+00:00",
+        "elapsed_ms": 2359.42,
+        "event": "completion_assessment",
+        "node": "research",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 3,
+          "evidence_chars": 3332,
+          "successful_searches": 1,
+          "cache_hits": 0,
+          "no_progress": 0
+        },
+        "assessment": {
+          "parts": [
+            {
+              "question_part": "What is the Federal Reserve's discount window and how does it work?",
+              "kind": "comparison",
+              "supports": [],
+              "missing": "The specific mechanism of how the discount window operates, including details about eligibility, borrowing terms, and the role of the Federal Reserve.",
+              "published_after": ""
+            }
+          ],
+          "action": "search",
+          "searches": [
+            {
+              "tool": "search_wikipedia",
+              "query": "Federal Reserve's discount window mechanism",
+              "max_results": 3
+            }
+          ],
+          "reason": "A focused search is needed to resolve the missing details about the operation of the discount window."
+        },
+        "accepted": true,
+        "forced_stop": false
+      },
+      {
+        "schema_version": 1,
+        "run_id": "7dc86385bef7434c8423942f0c125722",
+        "sequence": 34,
+        "timestamp": "2026-11-11T22:30:57.108962+00:00",
+        "elapsed_ms": 2745.22,
+        "event": "tool_end",
+        "node": "tools",
+        "counters": {
+          "tool_calls": 2,
+          "http_calls": 2,
+          "model_calls": 3,
+          "evidence_chars": 3461,
+          "successful_searches": 2,
+          "cache_hits": 0,
+          "no_progress": 0
+        },
+        "tool": "search_wikipedia",
+        "arguments": {
+          "query": "Federal Reserve's discount window mechanism",
+          "max_results": 3
+        },
+        "call_id": "3:0",
+        "status": "ok",
+        "cache_hit": false,
+        "new_source_ids": [
+          4
+        ],
+        "duration_ms": 384.2
+      },
+      {
+        "schema_version": 1,
+        "run_id": "7dc86385bef7434c8423942f0c125722",
+        "sequence": 41,
+        "timestamp": "2026-11-11T22:30:58.285586+00:00",
+        "elapsed_ms": 3921.84,
+        "event": "completion_assessment",
+        "node": "research",
+        "counters": {
+          "tool_calls": 2,
+          "http_calls": 2,
+          "model_calls": 4,
+          "evidence_chars": 3461,
+          "successful_searches": 2,
+          "cache_hits": 0,
+          "no_progress": 0
+        },
+        "assessment": {
+          "parts": [
+            {
+              "question_part": "What is the Federal Reserve's discount window and how does it work?",
+              "kind": "comparison",
+              "supports": [
+                {
+                  "evidence_id": 1,
+                  "observed_at": "2026-11-11"
+                }
+              ],
+              "missing": "The specific mechanism of how the discount window operates, including details about eligibility, borrowing terms, and the role of the Federal Reserve.",
+              "published_after": ""
+            }
+          ],
+          "action": "search",
+          "searches": [
+            {
+              "tool": "search_wikipedia",
+              "query": "Federal Reserve's discount window mechanism",
+              "max_results": 3
+            }
+          ],
+          "reason": "A focused search is needed to resolve the missing details about the operation of the discount window."
+        },
+        "accepted": true,
+        "forced_stop": false
+      },
+      {
+        "schema_version": 1,
+        "run_id": "7dc86385bef7434c8423942f0c125722",
+        "sequence": 46,
+        "timestamp": "2026-11-11T22:30:58.287457+00:00",
+        "elapsed_ms": 3923.71,
+        "event": "tool_end",
+        "node": "tools",
+        "counters": {
+          "tool_calls": 2,
+          "http_calls": 2,
+          "model_calls": 4,
+          "evidence_chars": 3461,
+          "successful_searches": 2,
+          "cache_hits": 1,
+          "no_progress": 1
+        },
+        "tool": "search_wikipedia",
+        "arguments": {
+          "query": "Federal Reserve's discount window mechanism",
+          "max_results": 3
+        },
+        "call_id": "4:0",
+        "status": "ok",
+        "cache_hit": true,
+        "new_source_ids": [],
+        "duration_ms": 0.35
+      },
+      {
+        "schema_version": 1,
+        "run_id": "7dc86385bef7434c8423942f0c125722",
+        "sequence": 53,
+        "timestamp": "2026-11-11T22:31:00.014807+00:00",
+        "elapsed_ms": 5651.06,
+        "event": "assessment_rejected",
+        "node": "research",
+        "counters": {
+          "tool_calls": 2,
+          "http_calls": 2,
+          "model_calls": 5,
+          "evidence_chars": 3461,
+          "successful_searches": 2,
+          "cache_hits": 1,
+          "no_progress": 1
+        },
+        "errors": [
+          "parts.1: a measurement needs an observation period in its evidence text; retrieval date is insufficient.",
+          "Preserve the existing question parts and kinds; update their evidence/gaps, not the requirements."
+        ],
+        "rejected_assessment": "{\n  \"parts\": [\n    {\n      \"question_part\": \"What is the Federal Reserve's discount window and how does it work?\",\n      \"kind\": \"comparison\",\n      \"supports\": [\n        {\n          \"evidence_id\": 1,\n          \"observed_at\": \"2026-11-11\"\n        }\n      ],\n      \"missing\": \"The specific mechanism of how the discount window operates, including details about eligibility, borrowing terms, and the role of the Federal Reserve.\",\n      \"published_after\": \"\"\n    },\n    {\n      \"question_part\": \"What is the Federal Reserve's discount window and how does it work?\",\n      \"kind\": \"dated_measurement\",\n      \"supports\": [\n        {\n          \"evidence_id\": 3,\n          \"observed_at\": \"2023-03-01\"\n        }\n      ],\n      \"missing\": \"The specific mechanism of how the discount window operates, including details about eligibility, borrowing terms, and the role of the Federal Reserve.\",\n      \"published_after\": \"\"\n    }\n  ],\n  \"action\": \"search\",\n  \"searches\": [\n    {\n      \"tool\": \"search_wikipedia\",\n      \"query\": \"Federal Reserve's discount window mechanism\",\n      \"max_results\": 3\n    }\n  ],\n  \"reason\": \"A focused search is needed to resolve the missing details about the operation of the discount window.\"\n}"
+      },
+      {
+        "schema_version": 1,
+        "run_id": "7dc86385bef7434c8423942f0c125722",
+        "sequence": 57,
+        "timestamp": "2026-11-11T22:31:01.842260+00:00",
+        "elapsed_ms": 7478.52,
+        "event": "assessment_rejected",
+        "node": "research",
+        "counters": {
+          "tool_calls": 2,
+          "http_calls": 2,
+          "model_calls": 6,
+          "evidence_chars": 3461,
+          "successful_searches": 2,
+          "cache_hits": 1,
+          "no_progress": 1
+        },
+        "errors": [
+          "parts.1: a measurement needs an observation period in its evidence text; retrieval date is insufficient.",
+          "Preserve the existing question parts and kinds; update their evidence/gaps, not the requirements."
+        ],
+        "rejected_assessment": "{\n  \"parts\": [\n    {\n      \"question_part\": \"What is the Federal Reserve's discount window and how does it work?\",\n      \"kind\": \"comparison\",\n      \"supports\": [\n        {\n          \"evidence_id\": 1,\n          \"observed_at\": \"2026-11-11\"\n        }\n      ],\n      \"missing\": \"The specific mechanism of how the discount window operates, including details about eligibility, borrowing terms, and the role of the Federal Reserve.\",\n      \"published_after\": \"\"\n    },\n    {\n      \"question_part\": \"What is the Federal Reserve's discount window and how does it work?\",\n      \"kind\": \"dated_measurement\",\n      \"supports\": [\n        {\n          \"evidence_id\": 3,\n          \"observed_at\": \"2023-03-01\"\n        }\n      ],\n      \"missing\": \"The specific mechanism of how the discount window operates, including details about eligibility, borrowing terms, and the role of the Federal Reserve.\",\n      \"published_after\": \"\"\n    }\n  ],\n  \"action\": \"search\",\n  \"searches\": [\n    {\n      \"tool\": \"search_wikipedia\",\n      \"query\": \"Federal Reserve's discount window mechanism\",\n      \"max_results\": 3\n    }\n  ],\n  \"reason\": \"A focused search is needed to resolve the missing details about the operation of the discount window.\"\n}"
+      },
+      {
+        "schema_version": 1,
+        "run_id": "7dc86385bef7434c8423942f0c125722",
+        "sequence": 58,
+        "timestamp": "2026-11-11T22:31:01.842606+00:00",
+        "elapsed_ms": 7478.86,
+        "event": "completion_assessment",
+        "node": "research",
+        "counters": {
+          "tool_calls": 2,
+          "http_calls": 2,
+          "model_calls": 6,
+          "evidence_chars": 3461,
+          "successful_searches": 2,
+          "cache_hits": 1,
+          "no_progress": 1
+        },
+        "assessment": {
+          "action": "limited",
+          "parts": [
+            {
+              "question_part": "What is the Federal Reserve's discount window and how does it work?",
+              "kind": "comparison",
+              "supports": [
+                {
+                  "evidence_id": 1,
+                  "observed_at": "2026-11-11"
+                }
+              ],
+              "missing": "The specific mechanism of how the discount window operates, including details about eligibility, borrowing terms, and the role of the Federal Reserve.",
+              "published_after": ""
+            },
+            {
+              "question_part": "What is the Federal Reserve's discount window and how does it work?",
+              "kind": "dated_measurement",
+              "supports": [],
+              "missing": "The specific mechanism of how the discount window operates, including details about eligibility, borrowing terms, and the role of the Federal Reserve.",
+              "published_after": ""
+            }
+          ],
+          "searches": [],
+          "reason": "The completion assessment remained inconsistent after one repair; only mechanically valid support is used."
+        },
+        "accepted": true,
+        "forced_stop": true,
+        "origin": "application_fallback"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "question": "What are the Basel III capital requirements for banks?",
+    "content_verdict": "fail",
+    "events": [
+      {
+        "schema_version": 1,
+        "run_id": "2002021d54a441c181bc6eefc0107721",
+        "sequence": 22,
+        "timestamp": "2026-11-11T22:31:04.050038+00:00",
+        "elapsed_ms": 1325.11,
+        "event": "tool_end",
+        "node": "tools",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 2,
+          "evidence_chars": 2447,
+          "successful_searches": 1,
+          "cache_hits": 0,
+          "no_progress": 0
+        },
+        "tool": "search_wikipedia",
+        "arguments": {
+          "query": "Basel III capital requirements"
+        },
+        "call_id": "2:0",
+        "status": "ok",
+        "cache_hit": false,
+        "new_source_ids": [
+          1,
+          2,
+          3
+        ],
+        "duration_ms": 518.54
+      },
+      {
+        "schema_version": 1,
+        "run_id": "2002021d54a441c181bc6eefc0107721",
+        "sequence": 29,
+        "timestamp": "2026-11-11T22:31:05.274622+00:00",
+        "elapsed_ms": 2549.7,
+        "event": "completion_assessment",
+        "node": "research",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 3,
+          "evidence_chars": 2447,
+          "successful_searches": 1,
+          "cache_hits": 0,
+          "no_progress": 0
+        },
+        "assessment": {
+          "parts": [
+            {
+              "question_part": "What are the Basel III capital requirements for banks?",
+              "kind": "fact",
+              "supports": [],
+              "missing": "The specific capital requirements under Basel III are not explicitly detailed in the provided evidence.",
+              "published_after": ""
+            },
+            {
+              "question_part": "What are the Basel III capital requirements for banks?",
+              "kind": "comparison",
+              "supports": [],
+              "missing": "The evidence does not provide a comparison of different aspects of Basel III capital requirements.",
+              "published_after": ""
+            }
+          ],
+          "action": "search",
+          "searches": [
+            {
+              "tool": "search_wikipedia",
+              "query": "Basel III capital requirements",
+              "max_results": 3
+            }
+          ],
+          "reason": "The provided evidence does not include specific details about the Basel III capital requirements for banks. A further search is needed to obtain this information."
+        },
+        "accepted": true,
+        "forced_stop": false
+      },
+      {
+        "schema_version": 1,
+        "run_id": "2002021d54a441c181bc6eefc0107721",
+        "sequence": 34,
+        "timestamp": "2026-11-11T22:31:05.275737+00:00",
+        "elapsed_ms": 2550.81,
+        "event": "tool_end",
+        "node": "tools",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 3,
+          "evidence_chars": 2447,
+          "successful_searches": 1,
+          "cache_hits": 1,
+          "no_progress": 1
+        },
+        "tool": "search_wikipedia",
+        "arguments": {
+          "query": "Basel III capital requirements",
+          "max_results": 3
+        },
+        "call_id": "3:0",
+        "status": "ok",
+        "cache_hit": true,
+        "new_source_ids": [],
+        "duration_ms": 0.31
+      },
+      {
+        "schema_version": 1,
+        "run_id": "2002021d54a441c181bc6eefc0107721",
+        "sequence": 41,
+        "timestamp": "2026-11-11T22:31:06.501814+00:00",
+        "elapsed_ms": 3776.89,
+        "event": "completion_assessment",
+        "node": "research",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 4,
+          "evidence_chars": 2447,
+          "successful_searches": 1,
+          "cache_hits": 1,
+          "no_progress": 1
+        },
+        "assessment": {
+          "parts": [
+            {
+              "question_part": "What are the Basel III capital requirements for banks?",
+              "kind": "fact",
+              "supports": [],
+              "missing": "The specific capital requirements under Basel III are not explicitly detailed in the provided evidence.",
+              "published_after": ""
+            },
+            {
+              "question_part": "What are the Basel III capital requirements for banks?",
+              "kind": "comparison",
+              "supports": [],
+              "missing": "The evidence does not provide a comparison of different aspects of Basel III capital requirements.",
+              "published_after": ""
+            }
+          ],
+          "action": "search",
+          "searches": [
+            {
+              "tool": "search_wikipedia",
+              "query": "Basel III capital requirements",
+              "max_results": 3
+            }
+          ],
+          "reason": "The provided evidence does not include specific details about the Basel III capital requirements for banks. A further search is needed to obtain this information."
+        },
+        "accepted": true,
+        "forced_stop": false
+      },
+      {
+        "schema_version": 1,
+        "run_id": "2002021d54a441c181bc6eefc0107721",
+        "sequence": 46,
+        "timestamp": "2026-11-11T22:31:06.504639+00:00",
+        "elapsed_ms": 3779.71,
+        "event": "tool_end",
+        "node": "tools",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 4,
+          "evidence_chars": 2447,
+          "successful_searches": 1,
+          "cache_hits": 2,
+          "no_progress": 2
+        },
+        "tool": "search_wikipedia",
+        "arguments": {
+          "query": "Basel III capital requirements",
+          "max_results": 3
+        },
+        "call_id": "4:0",
+        "status": "ok",
+        "cache_hit": true,
+        "new_source_ids": [],
+        "duration_ms": 0.54
+      },
+      {
+        "schema_version": 1,
+        "run_id": "2002021d54a441c181bc6eefc0107721",
+        "sequence": 47,
+        "timestamp": "2026-11-11T22:31:06.505081+00:00",
+        "elapsed_ms": 3780.16,
+        "event": "research_stop",
+        "node": "tools",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 4,
+          "evidence_chars": 2447,
+          "successful_searches": 1,
+          "cache_hits": 2,
+          "no_progress": 2
+        },
+        "reason": "no_new_sources"
+      },
+      {
+        "schema_version": 1,
+        "run_id": "2002021d54a441c181bc6eefc0107721",
+        "sequence": 54,
+        "timestamp": "2026-11-11T22:31:07.729893+00:00",
+        "elapsed_ms": 5004.97,
+        "event": "completion_assessment",
+        "node": "research",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 5,
+          "evidence_chars": 2447,
+          "successful_searches": 1,
+          "cache_hits": 2,
+          "no_progress": 2
+        },
+        "assessment": {
+          "parts": [
+            {
+              "question_part": "What are the Basel III capital requirements for banks?",
+              "kind": "fact",
+              "supports": [],
+              "missing": "The specific capital requirements under Basel III are not explicitly detailed in the provided evidence.",
+              "published_after": ""
+            },
+            {
+              "question_part": "What are the Basel III capital requirements for banks?",
+              "kind": "comparison",
+              "supports": [],
+              "missing": "The evidence does not provide a comparison of different aspects of Basel III capital requirements.",
+              "published_after": ""
+            }
+          ],
+          "action": "limited",
+          "searches": [],
+          "reason": "Research budget/no-progress limit reached before the proposed follow-up."
+        },
+        "accepted": true,
+        "forced_stop": true
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "question": "What recent academic research exists on using machine learning for credit risk assessment?",
+    "content_verdict": "fail",
+    "events": [
+      {
+        "schema_version": 1,
+        "run_id": "d7306de923a54064af0329f3c3ee26b2",
+        "sequence": 22,
+        "timestamp": "2026-11-11T22:31:08.829570+00:00",
+        "elapsed_ms": 992.84,
+        "event": "tool_end",
+        "node": "tools",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 2,
+          "evidence_chars": 3577,
+          "successful_searches": 1,
+          "cache_hits": 0,
+          "no_progress": 0
+        },
+        "tool": "search_arxiv",
+        "arguments": {
+          "query": "machine learning credit risk assessment recent research"
+        },
+        "call_id": "2:0",
+        "status": "ok",
+        "cache_hit": false,
+        "new_source_ids": [
+          1,
+          2,
+          3
+        ],
+        "duration_ms": 242.04
+      },
+      {
+        "schema_version": 1,
+        "run_id": "d7306de923a54064af0329f3c3ee26b2",
+        "sequence": 29,
+        "timestamp": "2026-11-11T22:31:10.489969+00:00",
+        "elapsed_ms": 2653.24,
+        "event": "assessment_rejected",
+        "node": "research",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 3,
+          "evidence_chars": 3577,
+          "successful_searches": 1,
+          "cache_hits": 0,
+          "no_progress": 0
+        },
+        "errors": [
+          "parts.1: a measurement needs an observation period in its evidence text; retrieval date is insufficient.",
+          "parts.1: a measurement needs an observation period in its evidence text; retrieval date is insufficient.",
+          "Finish/limited actions must not schedule searches."
+        ],
+        "rejected_assessment": "{\n  \"parts\": [\n    {\n      \"question_part\": \"What recent academic research exists on using machine learning for credit risk assessment?\",\n      \"kind\": \"comparison\",\n      \"supports\": [],\n      \"missing\": \"Specific details on the latest research findings, methodologies, and applications are required.\"\n    },\n    {\n      \"question_part\": \"What recent academic research exists on using machine learning for credit risk assessment?\",\n      \"kind\": \"dated_measurement\",\n      \"supports\": [\n        {\n          \"evidence_id\": 1,\n          \"observed_at\": \"2024-03-06\"\n        },\n        {\n          \"evidence_id\": 2,\n          \"observed_at\": \"2025-06-04\"\n        }\n      ],\n      \"missing\": \"Specific details on the latest research findings, methodologies, and applications are required.\"\n    }\n  ],\n  \"action\": \"limited\",\n  \"searches\": [\n    {\n      \"tool\": \"search_arxiv\",\n      \"query\": \"machine learning credit risk assessment recent research\",\n      \"max_results\": 3\n    }\n  ],\n  \"reason\": \"The search for recent academic research on machine learning for credit risk assessment has been conducted, but the results are limited and do not provide sufficient details to fully answer the question.\"\n}"
+      },
+      {
+        "schema_version": 1,
+        "run_id": "d7306de923a54064af0329f3c3ee26b2",
+        "sequence": 33,
+        "timestamp": "2026-11-11T22:31:12.134206+00:00",
+        "elapsed_ms": 4297.48,
+        "event": "assessment_rejected",
+        "node": "research",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 4,
+          "evidence_chars": 3577,
+          "successful_searches": 1,
+          "cache_hits": 0,
+          "no_progress": 0
+        },
+        "errors": [
+          "parts.1: a measurement needs an observation period in its evidence text; retrieval date is insufficient.",
+          "parts.1: a measurement needs an observation period in its evidence text; retrieval date is insufficient.",
+          "Finish/limited actions must not schedule searches."
+        ],
+        "rejected_assessment": "{\n  \"parts\": [\n    {\n      \"question_part\": \"What recent academic research exists on using machine learning for credit risk assessment?\",\n      \"kind\": \"comparison\",\n      \"supports\": [],\n      \"missing\": \"Specific details on the latest research findings, methodologies, and applications are required.\"\n    },\n    {\n      \"question_part\": \"What recent academic research exists on using machine learning for credit risk assessment?\",\n      \"kind\": \"dated_measurement\",\n      \"supports\": [\n        {\n          \"evidence_id\": 1,\n          \"observed_at\": \"2024-03-06\"\n        },\n        {\n          \"evidence_id\": 2,\n          \"observed_at\": \"2025-06-04\"\n        }\n      ],\n      \"missing\": \"Specific details on the latest research findings, methodologies, and applications are required.\"\n    }\n  ],\n  \"action\": \"limited\",\n  \"searches\": [\n    {\n      \"tool\": \"search_arxiv\",\n      \"query\": \"machine learning credit risk assessment recent research\",\n      \"max_results\": 3\n    }\n  ],\n  \"reason\": \"The search for recent academic research on machine learning for credit risk assessment has been conducted, but the results are limited and do not provide sufficient details to fully answer the question.\"\n}"
+      },
+      {
+        "schema_version": 1,
+        "run_id": "d7306de923a54064af0329f3c3ee26b2",
+        "sequence": 34,
+        "timestamp": "2026-11-11T22:31:12.134437+00:00",
+        "elapsed_ms": 4297.71,
+        "event": "completion_assessment",
+        "node": "research",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 4,
+          "evidence_chars": 3577,
+          "successful_searches": 1,
+          "cache_hits": 0,
+          "no_progress": 0
+        },
+        "assessment": {
+          "action": "limited",
+          "parts": [
+            {
+              "question_part": "What recent academic research exists on using machine learning for credit risk assessment?",
+              "kind": "comparison",
+              "supports": [],
+              "missing": "Specific details on the latest research findings, methodologies, and applications are required.",
+              "published_after": ""
+            },
+            {
+              "question_part": "What recent academic research exists on using machine learning for credit risk assessment?",
+              "kind": "dated_measurement",
+              "supports": [],
+              "missing": "Specific details on the latest research findings, methodologies, and applications are required.",
+              "published_after": ""
+            }
+          ],
+          "searches": [],
+          "reason": "The completion assessment remained inconsistent after one repair; only mechanically valid support is used."
+        },
+        "accepted": true,
+        "forced_stop": true,
+        "origin": "application_fallback"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "question": "How did the Federal Reserve's monetary policy response to the 2008 financial crisis differ from its response to COVID-19?",
+    "content_verdict": "fail",
+    "events": [
+      {
+        "schema_version": 1,
+        "run_id": "27d8a1f5e241482986ec82db0016cda0",
+        "sequence": 22,
+        "timestamp": "2026-11-11T22:31:13.712185+00:00",
+        "elapsed_ms": 1477.17,
+        "event": "tool_end",
+        "node": "tools",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 2,
+          "evidence_chars": 3620,
+          "successful_searches": 1,
+          "cache_hits": 0,
+          "no_progress": 0
+        },
+        "tool": "search_wikipedia",
+        "arguments": {
+          "query": "Federal Reserve's monetary policy response to the 2008 financial crisis and COVID-19"
+        },
+        "call_id": "2:0",
+        "status": "ok",
+        "cache_hit": false,
+        "new_source_ids": [
+          1,
+          2,
+          3
+        ],
+        "duration_ms": 492.8
+      },
+      {
+        "schema_version": 1,
+        "run_id": "27d8a1f5e241482986ec82db0016cda0",
+        "sequence": 29,
+        "timestamp": "2026-11-11T22:31:14.980441+00:00",
+        "elapsed_ms": 2745.42,
+        "event": "completion_assessment",
+        "node": "research",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 3,
+          "evidence_chars": 3620,
+          "successful_searches": 1,
+          "cache_hits": 0,
+          "no_progress": 0
+        },
+        "assessment": {
+          "parts": [
+            {
+              "question_part": "How did the Federal Reserve's monetary policy response to the 2008 financial crisis differ from its response to COVID-19",
+              "kind": "comparison",
+              "supports": [],
+              "missing": "The specific details of the Federal Reserve's monetary policy responses to the 2008 financial crisis and COVID-19 are not provided in the evidence.",
+              "published_after": ""
+            }
+          ],
+          "action": "search",
+          "searches": [
+            {
+              "tool": "search_wikipedia",
+              "query": "Federal Reserve's monetary policy response to the 2008 financial crisis and COVID-19",
+              "max_results": 3
+            }
+          ],
+          "reason": "The evidence needs to be further searched to determine the specific details of the Federal Reserve's monetary policy responses to the 2008 financial crisis and COVID-19."
+        },
+        "accepted": true,
+        "forced_stop": false
+      },
+      {
+        "schema_version": 1,
+        "run_id": "27d8a1f5e241482986ec82db0016cda0",
+        "sequence": 34,
+        "timestamp": "2026-11-11T22:31:14.982384+00:00",
+        "elapsed_ms": 2747.37,
+        "event": "tool_end",
+        "node": "tools",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 3,
+          "evidence_chars": 3620,
+          "successful_searches": 1,
+          "cache_hits": 1,
+          "no_progress": 1
+        },
+        "tool": "search_wikipedia",
+        "arguments": {
+          "query": "Federal Reserve's monetary policy response to the 2008 financial crisis and COVID-19",
+          "max_results": 3
+        },
+        "call_id": "3:0",
+        "status": "ok",
+        "cache_hit": true,
+        "new_source_ids": [],
+        "duration_ms": 0.56
+      },
+      {
+        "schema_version": 1,
+        "run_id": "27d8a1f5e241482986ec82db0016cda0",
+        "sequence": 41,
+        "timestamp": "2026-11-11T22:31:16.245778+00:00",
+        "elapsed_ms": 4010.76,
+        "event": "completion_assessment",
+        "node": "research",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 4,
+          "evidence_chars": 3620,
+          "successful_searches": 1,
+          "cache_hits": 1,
+          "no_progress": 1
+        },
+        "assessment": {
+          "parts": [
+            {
+              "question_part": "How did the Federal Reserve's monetary policy response to the 2008 financial crisis differ from its response to COVID-19",
+              "kind": "comparison",
+              "supports": [],
+              "missing": "The specific details of the Federal Reserve's monetary policy responses to the 2008 financial crisis and COVID-19 are not provided in the evidence.",
+              "published_after": ""
+            }
+          ],
+          "action": "search",
+          "searches": [
+            {
+              "tool": "search_wikipedia",
+              "query": "Federal Reserve's monetary policy response to the 2008 financial crisis and COVID-19",
+              "max_results": 3
+            }
+          ],
+          "reason": "The evidence needs to be further searched to determine the specific details of the Federal Reserve's monetary policy responses to the 2008 financial crisis and COVID-19."
+        },
+        "accepted": true,
+        "forced_stop": false
+      },
+      {
+        "schema_version": 1,
+        "run_id": "27d8a1f5e241482986ec82db0016cda0",
+        "sequence": 46,
+        "timestamp": "2026-11-11T22:31:16.248092+00:00",
+        "elapsed_ms": 4013.08,
+        "event": "tool_end",
+        "node": "tools",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 4,
+          "evidence_chars": 3620,
+          "successful_searches": 1,
+          "cache_hits": 2,
+          "no_progress": 2
+        },
+        "tool": "search_wikipedia",
+        "arguments": {
+          "query": "Federal Reserve's monetary policy response to the 2008 financial crisis and COVID-19",
+          "max_results": 3
+        },
+        "call_id": "4:0",
+        "status": "ok",
+        "cache_hit": true,
+        "new_source_ids": [],
+        "duration_ms": 0.61
+      },
+      {
+        "schema_version": 1,
+        "run_id": "27d8a1f5e241482986ec82db0016cda0",
+        "sequence": 47,
+        "timestamp": "2026-11-11T22:31:16.248568+00:00",
+        "elapsed_ms": 4013.55,
+        "event": "research_stop",
+        "node": "tools",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 4,
+          "evidence_chars": 3620,
+          "successful_searches": 1,
+          "cache_hits": 2,
+          "no_progress": 2
+        },
+        "reason": "no_new_sources"
+      },
+      {
+        "schema_version": 1,
+        "run_id": "27d8a1f5e241482986ec82db0016cda0",
+        "sequence": 54,
+        "timestamp": "2026-11-11T22:31:17.547317+00:00",
+        "elapsed_ms": 5312.3,
+        "event": "completion_assessment",
+        "node": "research",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 5,
+          "evidence_chars": 3620,
+          "successful_searches": 1,
+          "cache_hits": 2,
+          "no_progress": 2
+        },
+        "assessment": {
+          "parts": [
+            {
+              "question_part": "How did the Federal Reserve's monetary policy response to the 2008 financial crisis differ from its response to COVID-19",
+              "kind": "comparison",
+              "supports": [],
+              "missing": "The specific details of the Federal Reserve's monetary policy responses to the 2008 financial crisis and COVID-19 are not provided in the evidence.",
+              "published_after": ""
+            }
+          ],
+          "action": "limited",
+          "searches": [],
+          "reason": "Research budget/no-progress limit reached before the proposed follow-up."
+        },
+        "accepted": true,
+        "forced_stop": true
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "question": "What is the current US unemployment rate and how has it changed over the past year?",
+    "content_verdict": "partial",
+    "events": [
+      {
+        "schema_version": 1,
+        "run_id": "245f5f1ef95a4f96b664452c5ec43826",
+        "sequence": 22,
+        "timestamp": "2026-11-11T22:31:18.672230+00:00",
+        "elapsed_ms": 1024.92,
+        "event": "tool_end",
+        "node": "tools",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 2,
+          "evidence_chars": 1153,
+          "successful_searches": 1,
+          "cache_hits": 0,
+          "no_progress": 0
+        },
+        "tool": "search_wikipedia",
+        "arguments": {
+          "query": "US unemployment rate"
+        },
+        "call_id": "2:0",
+        "status": "ok",
+        "cache_hit": false,
+        "new_source_ids": [
+          1,
+          2,
+          3
+        ],
+        "duration_ms": 321.06
+      },
+      {
+        "schema_version": 1,
+        "run_id": "245f5f1ef95a4f96b664452c5ec43826",
+        "sequence": 29,
+        "timestamp": "2026-11-11T22:31:20.107550+00:00",
+        "elapsed_ms": 2460.24,
+        "event": "completion_assessment",
+        "node": "research",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 3,
+          "evidence_chars": 1153,
+          "successful_searches": 1,
+          "cache_hits": 0,
+          "no_progress": 0
+        },
+        "assessment": {
+          "parts": [
+            {
+              "question_part": "What is the current US unemployment rate?",
+              "kind": "fact",
+              "supports": [
+                {
+                  "evidence_id": 1,
+                  "observed_at": "2026-11-11"
+                }
+              ],
+              "missing": "Current value of the US unemployment rate is not explicitly provided in the evidence.",
+              "published_after": ""
+            },
+            {
+              "question_part": "How has it changed over the past year?",
+              "kind": "fact",
+              "supports": [
+                {
+                  "evidence_id": 1,
+                  "observed_at": "2026-11-11"
+                }
+              ],
+              "missing": "Historical data on the US unemployment rate change over the past year is not explicitly provided in the evidence.",
+              "published_after": ""
+            }
+          ],
+          "action": "search",
+          "searches": [
+            {
+              "tool": "search_wikipedia",
+              "query": "US unemployment rate 2026-11-11",
+              "max_results": 3
+            }
+          ],
+          "reason": "Further search is needed to obtain the current unemployment rate and its historical changes."
+        },
+        "accepted": true,
+        "forced_stop": false
+      },
+      {
+        "schema_version": 1,
+        "run_id": "245f5f1ef95a4f96b664452c5ec43826",
+        "sequence": 34,
+        "timestamp": "2026-11-11T22:31:20.464570+00:00",
+        "elapsed_ms": 2817.26,
+        "event": "tool_end",
+        "node": "tools",
+        "counters": {
+          "tool_calls": 2,
+          "http_calls": 2,
+          "model_calls": 3,
+          "evidence_chars": 2363,
+          "successful_searches": 2,
+          "cache_hits": 0,
+          "no_progress": 0
+        },
+        "tool": "search_wikipedia",
+        "arguments": {
+          "query": "US unemployment rate 2026-11-11",
+          "max_results": 3
+        },
+        "call_id": "3:0",
+        "status": "ok",
+        "cache_hit": false,
+        "new_source_ids": [
+          4
+        ],
+        "duration_ms": 354.67
+      },
+      {
+        "schema_version": 1,
+        "run_id": "245f5f1ef95a4f96b664452c5ec43826",
+        "sequence": 41,
+        "timestamp": "2026-11-11T22:31:22.067630+00:00",
+        "elapsed_ms": 4420.32,
+        "event": "completion_assessment",
+        "node": "research",
+        "counters": {
+          "tool_calls": 2,
+          "http_calls": 2,
+          "model_calls": 4,
+          "evidence_chars": 2363,
+          "successful_searches": 2,
+          "cache_hits": 0,
+          "no_progress": 0
+        },
+        "assessment": {
+          "parts": [
+            {
+              "question_part": "What is the current US unemployment rate?",
+              "kind": "fact",
+              "supports": [
+                {
+                  "evidence_id": 4,
+                  "observed_at": "2026-11-11"
+                }
+              ],
+              "missing": "Current value of the US unemployment rate is not explicitly provided in the evidence.",
+              "published_after": ""
+            },
+            {
+              "question_part": "How has it changed over the past year?",
+              "kind": "fact",
+              "supports": [
+                {
+                  "evidence_id": 4,
+                  "observed_at": "2026-11-11"
+                }
+              ],
+              "missing": "Historical data on the US unemployment rate change over the past year is not explicitly provided in the evidence.",
+              "published_after": ""
+            }
+          ],
+          "action": "search",
+          "searches": [
+            {
+              "tool": "search_wikipedia",
+              "query": "US unemployment rate 2026-11-11",
+              "max_results": 3
+            }
+          ],
+          "reason": "Further search is needed to obtain the current unemployment rate and its historical changes."
+        },
+        "accepted": true,
+        "forced_stop": false
+      },
+      {
+        "schema_version": 1,
+        "run_id": "245f5f1ef95a4f96b664452c5ec43826",
+        "sequence": 46,
+        "timestamp": "2026-11-11T22:31:22.069581+00:00",
+        "elapsed_ms": 4422.27,
+        "event": "tool_end",
+        "node": "tools",
+        "counters": {
+          "tool_calls": 2,
+          "http_calls": 2,
+          "model_calls": 4,
+          "evidence_chars": 2363,
+          "successful_searches": 2,
+          "cache_hits": 1,
+          "no_progress": 1
+        },
+        "tool": "search_wikipedia",
+        "arguments": {
+          "query": "US unemployment rate 2026-11-11",
+          "max_results": 3
+        },
+        "call_id": "4:0",
+        "status": "ok",
+        "cache_hit": true,
+        "new_source_ids": [],
+        "duration_ms": 0.46
+      },
+      {
+        "schema_version": 1,
+        "run_id": "245f5f1ef95a4f96b664452c5ec43826",
+        "sequence": 53,
+        "timestamp": "2026-11-11T22:31:23.645742+00:00",
+        "elapsed_ms": 5998.44,
+        "event": "completion_assessment",
+        "node": "research",
+        "counters": {
+          "tool_calls": 2,
+          "http_calls": 2,
+          "model_calls": 5,
+          "evidence_chars": 2363,
+          "successful_searches": 2,
+          "cache_hits": 1,
+          "no_progress": 1
+        },
+        "assessment": {
+          "parts": [
+            {
+              "question_part": "What is the current US unemployment rate?",
+              "kind": "fact",
+              "supports": [
+                {
+                  "evidence_id": 4,
+                  "observed_at": "2026-11-11"
+                }
+              ],
+              "missing": "Current value of the US unemployment rate is not explicitly provided in the evidence.",
+              "published_after": ""
+            },
+            {
+              "question_part": "How has it changed over the past year?",
+              "kind": "fact",
+              "supports": [
+                {
+                  "evidence_id": 4,
+                  "observed_at": "2026-11-11"
+                }
+              ],
+              "missing": "Historical data on the US unemployment rate change over the past year is not explicitly provided in the evidence.",
+              "published_after": ""
+            }
+          ],
+          "action": "search",
+          "searches": [
+            {
+              "tool": "search_wikipedia",
+              "query": "US unemployment rate 2026-11-11",
+              "max_results": 3
+            }
+          ],
+          "reason": "Further search is needed to obtain the current unemployment rate and its historical changes."
+        },
+        "accepted": true,
+        "forced_stop": false
+      },
+      {
+        "schema_version": 1,
+        "run_id": "245f5f1ef95a4f96b664452c5ec43826",
+        "sequence": 58,
+        "timestamp": "2026-11-11T22:31:23.648026+00:00",
+        "elapsed_ms": 6000.72,
+        "event": "tool_end",
+        "node": "tools",
+        "counters": {
+          "tool_calls": 2,
+          "http_calls": 2,
+          "model_calls": 5,
+          "evidence_chars": 2363,
+          "successful_searches": 2,
+          "cache_hits": 2,
+          "no_progress": 2
+        },
+        "tool": "search_wikipedia",
+        "arguments": {
+          "query": "US unemployment rate 2026-11-11",
+          "max_results": 3
+        },
+        "call_id": "5:0",
+        "status": "ok",
+        "cache_hit": true,
+        "new_source_ids": [],
+        "duration_ms": 0.41
+      },
+      {
+        "schema_version": 1,
+        "run_id": "245f5f1ef95a4f96b664452c5ec43826",
+        "sequence": 59,
+        "timestamp": "2026-11-11T22:31:23.648332+00:00",
+        "elapsed_ms": 6001.02,
+        "event": "research_stop",
+        "node": "tools",
+        "counters": {
+          "tool_calls": 2,
+          "http_calls": 2,
+          "model_calls": 5,
+          "evidence_chars": 2363,
+          "successful_searches": 2,
+          "cache_hits": 2,
+          "no_progress": 2
+        },
+        "reason": "no_new_sources"
+      },
+      {
+        "schema_version": 1,
+        "run_id": "245f5f1ef95a4f96b664452c5ec43826",
+        "sequence": 66,
+        "timestamp": "2026-11-11T22:31:25.228692+00:00",
+        "elapsed_ms": 7581.39,
+        "event": "completion_assessment",
+        "node": "research",
+        "counters": {
+          "tool_calls": 2,
+          "http_calls": 2,
+          "model_calls": 6,
+          "evidence_chars": 2363,
+          "successful_searches": 2,
+          "cache_hits": 2,
+          "no_progress": 2
+        },
+        "assessment": {
+          "parts": [
+            {
+              "question_part": "What is the current US unemployment rate?",
+              "kind": "fact",
+              "supports": [
+                {
+                  "evidence_id": 4,
+                  "observed_at": "2026-11-11"
+                }
+              ],
+              "missing": "Current value of the US unemployment rate is not explicitly provided in the evidence.",
+              "published_after": ""
+            },
+            {
+              "question_part": "How has it changed over the past year?",
+              "kind": "fact",
+              "supports": [
+                {
+                  "evidence_id": 4,
+                  "observed_at": "2026-11-11"
+                }
+              ],
+              "missing": "Historical data on the US unemployment rate change over the past year is not explicitly provided in the evidence.",
+              "published_after": ""
+            }
+          ],
+          "action": "limited",
+          "searches": [],
+          "reason": "Research budget/no-progress limit reached before the proposed follow-up."
+        },
+        "accepted": true,
+        "forced_stop": true
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "question": "Explain the relationship between yield curve inversions and recessions. Are there recent academic papers on this topic?",
+    "content_verdict": "fail",
+    "events": [
+      {
+        "schema_version": 1,
+        "run_id": "329a168159234f2aac418ef150164012",
+        "sequence": 22,
+        "timestamp": "2026-11-11T22:31:27.225094+00:00",
+        "elapsed_ms": 1252.45,
+        "event": "tool_end",
+        "node": "tools",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 2,
+          "evidence_chars": 2984,
+          "successful_searches": 1,
+          "cache_hits": 0,
+          "no_progress": 0
+        },
+        "tool": "search_wikipedia",
+        "arguments": {
+          "query": "Yield curve inversion and recessions"
+        },
+        "call_id": "2:0",
+        "status": "ok",
+        "cache_hit": false,
+        "new_source_ids": [
+          1,
+          2,
+          3
+        ],
+        "duration_ms": 442.75
+      },
+      {
+        "schema_version": 1,
+        "run_id": "329a168159234f2aac418ef150164012",
+        "sequence": 29,
+        "timestamp": "2026-11-11T22:31:28.751243+00:00",
+        "elapsed_ms": 2778.6,
+        "event": "assessment_rejected",
+        "node": "research",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 3,
+          "evidence_chars": 2984,
+          "successful_searches": 1,
+          "cache_hits": 0,
+          "no_progress": 0
+        },
+        "errors": [
+          "parts.1: evidence ID 4 was not retrieved."
+        ],
+        "rejected_assessment": "{\n  \"parts\": [\n    {\n      \"question_part\": \"Explain the relationship between yield curve inversions and recessions\",\n      \"kind\": \"comparison\",\n      \"supports\": [],\n      \"missing\": \"A detailed explanation of the relationship between yield curve inversions and recessions is required, including historical context, economic mechanisms, and the\"\n    },\n    {\n      \"question_part\": \"Are there recent academic papers on this topic?\",\n      \"kind\": \"comparison\",\n      \"supports\": [\n        {\n          \"evidence_id\": 4,\n          \"observed_at\": \"2026-11-11\"\n        }\n      ],\n      \"missing\": \"A search for recent academic papers on the relationship between yield curve inversions and recessions is required to confirm if there are any recent studies or\"\n    }\n  ],\n  \"action\": \"search\",\n  \"searches\": [\n    {\n      \"tool\": \"search_arxiv\",\n      \"query\": \"Yield curve inversion and recession effects\"\n    },\n    {\n      \"tool\": \"search_wikipedia\",\n      \"query\": \"Yield curve inversion and recession relationship\"\n    }\n  ],\n  \"reason\": \"A focused search is needed to confirm the existence of recent academic papers and to provide a detailed explanation of the relationship between yield curve inversions and recessions.\"\n}"
+      },
+      {
+        "schema_version": 1,
+        "run_id": "329a168159234f2aac418ef150164012",
+        "sequence": 33,
+        "timestamp": "2026-11-11T22:31:30.365629+00:00",
+        "elapsed_ms": 4392.99,
+        "event": "assessment_rejected",
+        "node": "research",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 4,
+          "evidence_chars": 2984,
+          "successful_searches": 1,
+          "cache_hits": 0,
+          "no_progress": 0
+        },
+        "errors": [
+          "parts.1: evidence ID 4 was not retrieved."
+        ],
+        "rejected_assessment": "{\n  \"parts\": [\n    {\n      \"question_part\": \"Explain the relationship between yield curve inversions and recessions\",\n      \"kind\": \"comparison\",\n      \"supports\": [],\n      \"missing\": \"A detailed explanation of the relationship between yield curve inversions and recessions is required, including historical context, economic mechanisms, and the\"\n    },\n    {\n      \"question_part\": \"Are there recent academic papers on this topic?\",\n      \"kind\": \"comparison\",\n      \"supports\": [\n        {\n          \"evidence_id\": 4,\n          \"observed_at\": \"2026-11-11\"\n        }\n      ],\n      \"missing\": \"A search for recent academic papers on the relationship between yield curve inversions and recessions is required to confirm if there are any recent studies or\"\n    }\n  ],\n  \"action\": \"search\",\n  \"searches\": [\n    {\n      \"tool\": \"search_arxiv\",\n      \"query\": \"Yield curve inversion and recession effects\"\n    },\n    {\n      \"tool\": \"search_wikipedia\",\n      \"query\": \"Yield curve inversion and recession relationship\"\n    }\n  ],\n  \"reason\": \"A focused search is needed to confirm the existence of recent academic papers and to provide a detailed explanation of the relationship between yield curve inversions and recessions.\"\n}"
+      },
+      {
+        "schema_version": 1,
+        "run_id": "329a168159234f2aac418ef150164012",
+        "sequence": 34,
+        "timestamp": "2026-11-11T22:31:30.365893+00:00",
+        "elapsed_ms": 4393.25,
+        "event": "completion_assessment",
+        "node": "research",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 4,
+          "evidence_chars": 2984,
+          "successful_searches": 1,
+          "cache_hits": 0,
+          "no_progress": 0
+        },
+        "assessment": {
+          "action": "limited",
+          "parts": [
+            {
+              "question_part": "Explain the relationship between yield curve inversions and recessions",
+              "kind": "comparison",
+              "supports": [],
+              "missing": "A detailed explanation of the relationship between yield curve inversions and recessions is required, including historical context, economic mechanisms, and the",
+              "published_after": ""
+            },
+            {
+              "question_part": "Are there recent academic papers on this topic?",
+              "kind": "comparison",
+              "supports": [],
+              "missing": "A search for recent academic papers on the relationship between yield curve inversions and recessions is required to confirm if there are any recent studies or",
+              "published_after": ""
+            }
+          ],
+          "searches": [],
+          "reason": "The completion assessment remained inconsistent after one repair; only mechanically valid support is used."
+        },
+        "accepted": true,
+        "forced_stop": true,
+        "origin": "application_fallback"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "question": "What is the best restaurant in New York City?",
+    "content_verdict": "pass",
+    "events": []
+  },
+  {
+    "id": 8,
+    "question": "What are the implications of quantum computing for banking encryption?",
+    "content_verdict": "fail",
+    "events": [
+      {
+        "schema_version": 1,
+        "run_id": "6eaf5801e99145c38b34373681c4dea1",
+        "sequence": 22,
+        "timestamp": "2026-11-11T22:31:32.408840+00:00",
+        "elapsed_ms": 1232.35,
+        "event": "tool_end",
+        "node": "tools",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 2,
+          "evidence_chars": 3291,
+          "successful_searches": 1,
+          "cache_hits": 0,
+          "no_progress": 0
+        },
+        "tool": "search_wikipedia",
+        "arguments": {
+          "query": "Quantum computing implications for banking encryption"
+        },
+        "call_id": "2:0",
+        "status": "ok",
+        "cache_hit": false,
+        "new_source_ids": [
+          1,
+          2,
+          3
+        ],
+        "duration_ms": 469.74
+      },
+      {
+        "schema_version": 1,
+        "run_id": "6eaf5801e99145c38b34373681c4dea1",
+        "sequence": 29,
+        "timestamp": "2026-11-11T22:31:33.908134+00:00",
+        "elapsed_ms": 2731.65,
+        "event": "assessment_rejected",
+        "node": "research",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 3,
+          "evidence_chars": 3291,
+          "successful_searches": 1,
+          "cache_hits": 0,
+          "no_progress": 0
+        },
+        "errors": [
+          "parts.1: a measurement needs an observation period in its evidence text; retrieval date is insufficient.",
+          "Finish/limited actions must not schedule searches."
+        ],
+        "rejected_assessment": "{\n  \"parts\": [\n    {\n      \"question_part\": \"What are the implications of quantum computing for banking encryption?\",\n      \"kind\": \"comparison\",\n      \"supports\": [],\n      \"missing\": \"The specific implications of quantum computing on banking encryption are not fully detailed in the provided evidence.\"\n    },\n    {\n      \"question_part\": \"How does quantum computing affect the security of banking encryption?\",\n      \"kind\": \"dated_measurement\",\n      \"supports\": [\n        {\n          \"evidence_id\": 1,\n          \"observed_at\": \"2026-11-11\"\n        }\n      ],\n      \"missing\": \"The exact impact of quantum computing on banking encryption is not fully established in the provided evidence.\"\n    }\n  ],\n  \"action\": \"limited\",\n  \"searches\": [\n    {\n      \"tool\": \"search_wikipedia\",\n      \"query\": \"Quantum computing implications for banking encryption\",\n      \"max_results\": 3\n    }\n  ],\n  \"reason\": \"The provided evidence does not fully address the implications of quantum computing on banking encryption, and further research is needed.\"\n}"
+      },
+      {
+        "schema_version": 1,
+        "run_id": "6eaf5801e99145c38b34373681c4dea1",
+        "sequence": 33,
+        "timestamp": "2026-11-11T22:31:35.306557+00:00",
+        "elapsed_ms": 4130.07,
+        "event": "assessment_rejected",
+        "node": "research",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 4,
+          "evidence_chars": 3291,
+          "successful_searches": 1,
+          "cache_hits": 0,
+          "no_progress": 0
+        },
+        "errors": [
+          "parts.1: a measurement needs an observation period in its evidence text; retrieval date is insufficient.",
+          "Finish/limited actions must not schedule searches."
+        ],
+        "rejected_assessment": "{\n  \"parts\": [\n    {\n      \"question_part\": \"What are the implications of quantum computing for banking encryption?\",\n      \"kind\": \"comparison\",\n      \"supports\": [],\n      \"missing\": \"The specific implications of quantum computing on banking encryption are not fully detailed in the provided evidence.\"\n    },\n    {\n      \"question_part\": \"How does quantum computing affect the security of banking encryption?\",\n      \"kind\": \"dated_measurement\",\n      \"supports\": [\n        {\n          \"evidence_id\": 1,\n          \"observed_at\": \"2026-11-11\"\n        }\n      ],\n      \"missing\": \"The exact impact of quantum computing on banking encryption is not fully established in the provided evidence.\"\n    }\n  ],\n  \"action\": \"limited\",\n  \"searches\": [\n    {\n      \"tool\": \"search_wikipedia\",\n      \"query\": \"Quantum computing implications for banking encryption\",\n      \"max_results\": 3\n    }\n  ],\n  \"reason\": \"The provided evidence does not fully address the implications of quantum computing on banking encryption, and further research is needed.\"\n}"
+      },
+      {
+        "schema_version": 1,
+        "run_id": "6eaf5801e99145c38b34373681c4dea1",
+        "sequence": 34,
+        "timestamp": "2026-11-11T22:31:35.306952+00:00",
+        "elapsed_ms": 4130.47,
+        "event": "completion_assessment",
+        "node": "research",
+        "counters": {
+          "tool_calls": 1,
+          "http_calls": 1,
+          "model_calls": 4,
+          "evidence_chars": 3291,
+          "successful_searches": 1,
+          "cache_hits": 0,
+          "no_progress": 0
+        },
+        "assessment": {
+          "action": "limited",
+          "parts": [
+            {
+              "question_part": "What are the implications of quantum computing for banking encryption?",
+              "kind": "comparison",
+              "supports": [],
+              "missing": "The specific implications of quantum computing on banking encryption are not fully detailed in the provided evidence.",
+              "published_after": ""
+            },
+            {
+              "question_part": "How does quantum computing affect the security of banking encryption?",
+              "kind": "dated_measurement",
+              "supports": [],
+              "missing": "The exact impact of quantum computing on banking encryption is not fully established in the provided evidence.",
+              "published_after": ""
+            }
+          ],
+          "searches": [],
+          "reason": "The completion assessment remained inconsistent after one repair; only mechanically valid support is used."
+        },
+        "accepted": true,
+        "forced_stop": true,
+        "origin": "application_fallback"
+      }
+    ]
+  }
+]

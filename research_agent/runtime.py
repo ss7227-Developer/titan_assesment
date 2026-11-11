@@ -20,10 +20,14 @@ class Runtime:
     max_tools: int = 6
     max_http: int = 10
     max_models: int = 10
+    max_no_progress: int = 2
     tool_calls: int = 0
     http_calls: int = 0
     model_calls: int = 0
     evidence_chars: int = 0
+    successful_searches: int = 0
+    cache_hits: int = 0
+    no_progress: int = 0
 
     @property
     def elapsed(self) -> float:
@@ -38,11 +42,19 @@ class Runtime:
         return (self.remaining("research") > 0.1 and self.tool_calls < self.max_tools
                 and self.http_calls < self.max_http
                 and self.model_calls < self.max_models - 1
-                and self.evidence_chars < 18000)
+                and self.evidence_chars < 18000
+                and self.no_progress < self.max_no_progress)
+
+    def research_stop_reason(self) -> str:
+        if self.no_progress >= self.max_no_progress:
+            return "no_new_sources"
+        return "research_budget" if not self.can_research() else ""
 
     def counters(self) -> dict:
         return {"tool_calls": self.tool_calls, "http_calls": self.http_calls,
-                "model_calls": self.model_calls, "evidence_chars": self.evidence_chars}
+                "model_calls": self.model_calls, "evidence_chars": self.evidence_chars,
+                "successful_searches": self.successful_searches,
+                "cache_hits": self.cache_hits, "no_progress": self.no_progress}
 
     async def bounded(self, awaitable, timeout: float):
         # wait_for cancels the underlying async HTTP/model task as well.
